@@ -2,12 +2,20 @@ package jp.yattom.androidnew;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.rule.ActivityTestRule;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+
+import static android.support.test.espresso.Espresso.*;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -16,6 +24,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    @Rule
+     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
+            MainActivity.class);
+
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -27,6 +39,8 @@ public class ExampleInstrumentedTest {
     @Test
     public void 基本動作のテスト() {
         // 「今何してる？」と聞く
+        onView(withId(R.id.to_record)).perform(ViewActions.click());
+        onView(withText("Record Now!")).check(ViewAssertions.matches(isDisplayed()));
         // 「開発中」と答える
         // また「今何してる？」と聞く
         // 「読書中」と答える
